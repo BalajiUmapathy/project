@@ -111,3 +111,20 @@ export const getPatient = async (userId: string) => {
     );
   }
 };
+
+
+//login user
+
+
+import { Account } from 'node-appwrite';
+import { account } from '../appwrite.config';
+
+export const loginUser = async (email: string, password: string) => {
+  try {
+    const session = await account.createSession(email, password);
+    return session;
+  } catch (error) {
+    console.error("An error occurred while logging in:", error);
+    throw error; // Rethrow error to be caught in the component
+  }
+};

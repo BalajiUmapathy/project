@@ -112,3 +112,26 @@ export function getAppointmentSchema(type: string) {
       return ScheduleAppointmentSchema;
   }
 }
+
+
+export const LoginFormValidation = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z
+  .string()
+  .min(8, "Password must be at least 8 characters")
+  .refine((password) => /[a-z]/.test(password), {
+    message: "Password must include at least one lowercase letter",
+  })
+  .refine((password) => /[A-Z]/.test(password), {
+    message: "Password must include at least one uppercase letter",
+  })
+  .refine((password) => /[0-9]/.test(password), {
+    message: "Password must include at least one digit",
+  })
+  .refine(
+    (password) => /[@$!%*?&#]/.test(password) || !/[~`[\]{}()<>+]/.test(password),
+    {
+      message: "Password must include at least one special character",
+    }
+  ),
+});

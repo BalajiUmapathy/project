@@ -5,42 +5,43 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+
 import { Form } from "@/components/ui/form";
-import { UserFormValidation } from "@/lib/validation";
 import CustomFormField, { FormFieldType } from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
-import appwriteService from "@/lib/appwrite.config";
-import useAuth from "@/context/useAuth";
+import { loginUser } from "@/lib/actions/patients.actions";
+import { LoginFormValidation } from "@/lib/validation"; // Ensure you have this schema defined
 
 const LoginForm = () => {
   const router = useRouter();
-  const { setAuthStatus } = useAuth(); // Assuming useAuth provides setAuthStatus
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const form = useForm<z.infer<typeof UserFormValidation>>({
-    resolver: zodResolver(UserFormValidation),
+  const form = useForm<z.infer<typeof LoginFormValidation>>({
+    resolver: zodResolver(LoginFormValidation),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof UserFormValidation>) => {
+  const onSubmit = async (values: z.infer<typeof LoginFormValidation>) => {
     setIsLoading(true);
     setError(null);
 
     try {
-      const session = await appwriteService.login(values.email, values.password);
+      const { email, password } = values;
+      const session = await loginUser(email, password);
+
       if (session) {
-        setAuthStatus(true); // Update authentication status
-        router.push("/profile"); // Redirect to profile page after successful login
+        router.push("/dashboard"); // Redirect to a protected page or dashboard
       }
-    } catch (error: any) {
-      setError(error.message || "Login failed"); // Display error message
-    } finally {
-      setIsLoading(false);
+    } catch (error) {
+      setError("Invalid email or password.");
+      console.error(error);
     }
+
+    setIsLoading(false);
   };
 
   return (
