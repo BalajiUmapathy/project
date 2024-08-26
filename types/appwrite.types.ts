@@ -1,16 +1,16 @@
 import { Models } from "node-appwrite";
 
 export interface User extends Models.Document {
-  userId: string;
-  name: string;
-  email: string;
-  phone: string;
+  userId: string| undefined;
+  name: string| undefined;
+  email: string| undefined;
+  phone: string| undefined;
   
-  birthDate: Date;
+  birthDate: Date| undefined;
   gender: Gender;
-  role: string;
-  password:string;
-  confirmpassword:string;
+  role: string| undefined;
+  password:string| undefined;
+  
   designation:string;
   department:string;
   
@@ -18,7 +18,7 @@ export interface User extends Models.Document {
   identificationType: string | undefined;
   identificationNumber: string | undefined;
   identificationDocument: FormData | undefined;
-  privacyConsent: boolean;
+
 }
 
 export interface Appointment extends Models.Document {

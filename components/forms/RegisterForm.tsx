@@ -38,6 +38,7 @@ const RegisterForm = ({ user }: { user: User }) => {
       name: user.name,
       email: user.email,
       
+      
     },
   });
 
@@ -84,7 +85,7 @@ const RegisterForm = ({ user }: { user: User }) => {
       const newUser = await registerUser(User);
 
       if (newUser) {
-        router.push(`/users/${user.$id}/dashboard`);
+        router.push(`/`);
       }
     } catch (error) {
       console.log(error);
@@ -194,6 +195,16 @@ const RegisterForm = ({ user }: { user: User }) => {
               placeholder="Enter the Designation"
             />
           </div>
+
+          <CustomFormField
+              fieldType={FormFieldType.INPUT}
+              control={form.control}
+              name="password"
+              label="Password"
+              placeholder="Enter the Password"
+            />
+          
+          
 
         
 
