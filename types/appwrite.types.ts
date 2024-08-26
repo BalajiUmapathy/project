@@ -5,12 +5,14 @@ export interface User extends Models.Document {
   name: string;
   email: string;
   phone: string;
-
+  
   birthDate: Date;
   gender: Gender;
   role: string;
   password:string;
   confirmpassword:string;
+  designation:string;
+  department:string;
   
  
   identificationType: string | undefined;

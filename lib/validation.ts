@@ -6,9 +6,9 @@ export const UserFormValidation = z.object({
     .min(2, "Name must be at least 2 characters")
     .max(50, "Name must be at most 50 characters"),
   email: z.string().email("Invalid email address"),
-  phone: z
-    .string()
-    .refine((phone) => /^\+\d{10,15}$/.test(phone), "Invalid phone number"),
+  // phone: z
+  //   .string()
+  //   .refine((phone) => /^\+\d{10,15}$/.test(phone), "Invalid phone number"),
     password: z
     .string()
     .min(8, "Password must be at least 8 characters")
@@ -31,85 +31,45 @@ export const UserFormValidation = z.object({
 
 export const PatientFormValidation = z.object({
   name: z
-    .string()
-    .min(2, "Name must be at least 2 characters")
-    .max(50, "Name must be at most 50 characters"),
-  email: z.string().email("Invalid email address"),
-  phone: z
-    .string()
-    .refine((phone) => /^\+\d{10,15}$/.test(phone), "Invalid phone number"),
-    password: z
-    .string()
-    .min(8, "Password must be at least 8 characters")
-    .refine((password) => /[a-z]/.test(password), {
-      message: "Password must include at least one lowercase letter",
-    })
-    .refine((password) => /[A-Z]/.test(password), {
-      message: "Password must include at least one uppercase letter",
-    })
-    .refine((password) => /[0-9]/.test(password), {
-      message: "Password must include at least one digit",
-    })
-    .refine(
-      (password) => /[@$!%*?&#]/.test(password) || !/[~`[\]{}()<>+]/.test(password),
-      {
-        message: "Password must include at least one special character",
-      }
-    ),
-  birthDate: z.coerce.date(),
-  gender: z.enum(["male", "female", "other"]),
-  address: z
-    .string()
-    .min(5, "Address must be at least 5 characters")
-    .max(500, "Address must be at most 500 characters"),
-  occupation: z
-    .string()
-    .min(2, "Occupation must be at least 2 characters")
-    .max(500, "Occupation must be at most 500 characters"),
-  emergencyContactName: z
-    .string()
-    .min(2, "Contact name must be at least 2 characters")
-    .max(50, "Contact name must be at most 50 characters"),
-  emergencyContactNumber: z
-    .string()
-    .refine(
-      (emergencyContactNumber) => /^\+\d{10,15}$/.test(emergencyContactNumber),
-      "Invalid phone number"
-    ),
-  primaryPhysician: z.string().min(2, "Select at least one doctor"),
-  insuranceProvider: z
-    .string()
-    .min(2, "Insurance name must be at least 2 characters")
-    .max(50, "Insurance name must be at most 50 characters"),
-  insurancePolicyNumber: z
-    .string()
-    .min(2, "Policy number must be at least 2 characters")
-    .max(50, "Policy number must be at most 50 characters"),
-  allergies: z.string().optional(),
-  currentMedication: z.string().optional(),
-  familyMedicalHistory: z.string().optional(),
-  pastMedicalHistory: z.string().optional(),
-  identificationType: z.string().optional(),
-  identificationNumber: z.string().optional(),
-  identificationDocument: z.custom<File[]>().optional(),
-  treatmentConsent: z
-    .boolean()
-    .default(false)
-    .refine((value) => value === true, {
-      message: "You must consent to treatment in order to proceed",
-    }),
-  disclosureConsent: z
-    .boolean()
-    .default(false)
-    .refine((value) => value === true, {
-      message: "You must consent to disclosure in order to proceed",
-    }),
-  privacyConsent: z
-    .boolean()
-    .default(false)
-    .refine((value) => value === true, {
-      message: "You must consent to privacy in order to proceed",
-    }),
+  .string()
+  .min(2, "Name must be at least 2 characters")
+  .max(50, "Name must be at most 50 characters"),
+email: z.string().email("Invalid email address"),
+phone: z
+  .string()
+  .refine((phone) => /^\+\d{10,15}$/.test(phone), "Invalid phone number"),
+birthDate: z.coerce.date(),
+gender: z.enum(["male", "female", "other"]),
+role: z.string().min(2, "Select at least one role"),
+department: z
+  .string()
+  .min(2, "Department must be at least 2 characters")
+  .max(100, "Department must be at most 100 characters"),
+  password: z
+  .string()
+  .min(8, "Password must be at least 8 characters")
+  .refine((password) => /[a-z]/.test(password), {
+    message: "Password must include at least one lowercase letter",
+  })
+  .refine((password) => /[A-Z]/.test(password), {
+    message: "Password must include at least one uppercase letter",
+  })
+  .refine((password) => /[0-9]/.test(password), {
+    message: "Password must include at least one digit",
+  })
+  .refine(
+    (password) => /[@$!%*?&#]/.test(password) || !/[~`[\]{}()<>+]/.test(password),
+    {
+      message: "Password must include at least one special character",
+    }
+  ),
+designation: z
+  .string()
+  .min(2, "Designation must be at least 2 characters")
+  .max(100, "Designation must be at most 100 characters"),
+identificationType: z.string().optional(),
+identificationNumber: z.string().optional(),
+identificationDocument: z.custom<File[]>().optional(),
 });
 
 export const CreateAppointmentSchema = z.object({

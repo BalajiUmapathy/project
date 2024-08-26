@@ -25,6 +25,7 @@ import "react-phone-number-input/style.css";
 import CustomFormField, { FormFieldType } from "../CustomFormField";
 // import { FileUploader } from "../FileUploader";
 import SubmitButton from "../SubmitButton";
+import { FileUploader } from "../FileUploader";
 
 const RegisterForm = ({ user }: { user: User }) => {
   const router = useRouter();
@@ -36,7 +37,7 @@ const RegisterForm = ({ user }: { user: User }) => {
       ...UserFormDefaultValues,
       name: user.name,
       email: user.email,
-      phone: user.password,
+      
     },
   });
 
@@ -67,21 +68,23 @@ const RegisterForm = ({ user }: { user: User }) => {
         phone: values.phone,
         birthDate: new Date(values.birthDate),
         gender: values.gender,
-        address: values.address,
+        
         role: values.role,
+        department:values.department,
+        designation:values.designation,
         
         identificationType: values.identificationType,
         identificationNumber: values.identificationNumber,
         identificationDocument: values.identificationDocument
           ? formData
           : undefined,
-        privacyConsent: values.privacyConsent,
+       
       };
 
       const newUser = await registerUser(User);
 
       if (newUser) {
-        router.push(`/users/${user.$id}/new-appointment`);
+        router.push(`/users/${user.$id}/dashboard`);
       }
     } catch (error) {
       console.log(error);
@@ -97,8 +100,8 @@ const RegisterForm = ({ user }: { user: User }) => {
         className="flex-1 space-y-12"
       >
         <section className="space-y-4">
-          <h1 className="header">Welcome 👋</h1>
-          <p className="text-dark-700">Let us know more about yourself.</p>
+          <h1 className="header">Registration</h1>
+          <p className="text-dark-700">Fill the details of the employee</p>
         </section>
 
         <section className="space-y-6">
@@ -112,7 +115,7 @@ const RegisterForm = ({ user }: { user: User }) => {
             fieldType={FormFieldType.INPUT}
             control={form.control}
             name="name"
-            placeholder="Balaji U"
+            placeholder="Enter the name"
             iconSrc="/assets/icons/user.svg"
             iconAlt="user"
           />
@@ -124,7 +127,7 @@ const RegisterForm = ({ user }: { user: User }) => {
               control={form.control}
               name="email"
               label="Email address"
-              placeholder="balaji.u.2022.cce@ritchennai.edu.in"
+              placeholder="Enter the Email address"
               iconSrc="/assets/icons/email.svg"
               iconAlt="email"
             />
@@ -134,7 +137,7 @@ const RegisterForm = ({ user }: { user: User }) => {
               control={form.control}
               name="phone"
               label="Phone Number"
-              placeholder="9043886675"
+              placeholder="Enter the Phone Number"
             />
           </div>
 
@@ -173,57 +176,36 @@ const RegisterForm = ({ user }: { user: User }) => {
             />
           </div>
 
-          {/* Address & Occupation */}
+          {/* Department and Designation */}
           <div className="flex flex-col gap-6 xl:flex-row">
             <CustomFormField
               fieldType={FormFieldType.INPUT}
               control={form.control}
-              name="address"
-              label="Address"
-              placeholder="no 4th street,Tambaram,Chennai"
+              name="department"
+              label="Department"
+              placeholder="Enter the Department"
             />
 
             <CustomFormField
               fieldType={FormFieldType.INPUT}
               control={form.control}
-              name="occupation"
-              label="Occupation"
-              placeholder=" Software Engineer"
+              name="designation"
+              label="Designation"
+              placeholder="Enter the Designation"
             />
           </div>
 
-          {/* Emergency Contact Name & Emergency Contact Number */}
-          <div className="flex flex-col gap-6 xl:flex-row">
-            <CustomFormField
-              fieldType={FormFieldType.INPUT}
-              control={form.control}
-              name="emergencyContactName"
-              label="Emergency contact name"
-              placeholder="Guardian's name"
-            />
+        
 
-            <CustomFormField
-              fieldType={FormFieldType.PHONE_INPUT}
-              control={form.control}
-              name="emergencyContactNumber"
-              label="Emergency contact number"
-              placeholder="9043886675"
-            />
-          </div>
-        </section>
+       
 
-        <section className="space-y-6">
-          <div className="mb-9 space-y-1">
-            <h2 className="sub-header">Medical Information</h2>
-          </div>
-
-          {/* PRIMARY CARE PHYSICIAN */}
+          {/* Role*/}
           <CustomFormField
             fieldType={FormFieldType.SELECT}
             control={form.control}
-            name="primaryPhysician"
-            label="Primary care physician"
-            placeholder="Select a physician"
+            name="role"
+            label="Role"
+            placeholder="Select the Role"
           >
             {Role.map((role: any, i: any) => (
               <SelectItem key={role.name + i} value={role.name}>
@@ -235,63 +217,8 @@ const RegisterForm = ({ user }: { user: User }) => {
             ))}
           </CustomFormField>
 
-          {/* INSURANCE & POLICY NUMBER */}
-          <div className="flex flex-col gap-6 xl:flex-row">
-            <CustomFormField
-              fieldType={FormFieldType.INPUT}
-              control={form.control}
-              name="insuranceProvider"
-              label="Insurance provider"
-              placeholder="Life Insurance Corporation (LIC)"
-            />
+          </section>
 
-            <CustomFormField
-              fieldType={FormFieldType.INPUT}
-              control={form.control}
-              name="insurancePolicyNumber"
-              label="Insurance policy number"
-              placeholder="ABC123456789"
-            />
-          </div>
-
-          {/* ALLERGY & CURRENT MEDICATIONS */}
-          <div className="flex flex-col gap-6 xl:flex-row">
-            <CustomFormField
-              fieldType={FormFieldType.TEXTAREA}
-              control={form.control}
-              name="allergies"
-              label="Allergies (if any)"
-              placeholder="Peanuts, Penicillin, Pollen"
-            />
-
-            <CustomFormField
-              fieldType={FormFieldType.TEXTAREA}
-              control={form.control}
-              name="currentMedication"
-              label="Current medications"
-              placeholder="Paracetamol 200mg, Cetirizine 10mg"
-            />
-          </div>
-
-          {/* FAMILY MEDICATION & PAST MEDICATIONS */}
-          <div className="flex flex-col gap-6 xl:flex-row">
-            <CustomFormField
-              fieldType={FormFieldType.TEXTAREA}
-              control={form.control}
-              name="familyMedicalHistory"
-              label=" Family medical history (if relevant)"
-              placeholder="Mother had brain cancer, Father has hypertension"
-            />
-
-            <CustomFormField
-              fieldType={FormFieldType.TEXTAREA}
-              control={form.control}
-              name="pastMedicalHistory"
-              label="Past medical history"
-              placeholder="Appendectomy in 2015, Asthma diagnosis in childhood"
-            />
-          </div>
-        </section>
 
         <section className="space-y-6">
           <div className="mb-9 space-y-1">
@@ -320,7 +247,7 @@ const RegisterForm = ({ user }: { user: User }) => {
             placeholder="123456789"
           />
 
-          {/* <CustomFormField
+          <CustomFormField
             fieldType={FormFieldType.SKELETON}
             control={form.control}
             name="identificationDocument"
@@ -330,37 +257,10 @@ const RegisterForm = ({ user }: { user: User }) => {
                 <FileUploader files={field.value} onChange={field.onChange} />
               </FormControl>
             )}
-          /> */}
-        </section>
-
-        <section className="space-y-6">
-          <div className="mb-9 space-y-1">
-            <h2 className="sub-header">Consent and Privacy</h2>
-          </div>
-
-          <CustomFormField
-            fieldType={FormFieldType.CHECKBOX}
-            control={form.control}
-            name="treatmentConsent"
-            label="I consent to receive treatment for my health condition."
-          />
-
-          <CustomFormField
-            fieldType={FormFieldType.CHECKBOX}
-            control={form.control}
-            name="disclosureConsent"
-            label="I consent to the use and disclosure of my health
-            information for treatment purposes."
-          />
-
-          <CustomFormField
-            fieldType={FormFieldType.CHECKBOX}
-            control={form.control}
-            name="privacyConsent"
-            label="I acknowledge that I have reviewed and agree to the
-            privacy policy"
           />
         </section>
+
+        
 
         <SubmitButton isLoading={isLoading}>Submit and Continue</SubmitButton>
       </form>

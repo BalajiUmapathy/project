@@ -23,12 +23,16 @@ declare type SearchParamProps = {
   birthDate: Date;
   gender: Gender;
   role: string;
-  password:string;
-  confirmpassword:string;
+  
+ 
   identificationType: string | undefined;
   identificationNumber: string | undefined;
   identificationDocument: FormData | undefined;
-  privacyConsent: boolean;
+ 
+  designation:string;
+  department:string;
+  
+ 
   }
   
   declare type CreateAppointmentParams = {

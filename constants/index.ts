@@ -10,7 +10,9 @@ export const UserFormDefaultValues = {
   address: "",
   role: "",
   password:"",
-  confirmpassword:"",
+ 
+  department: "",
+  designation: "",
   
   identificationType: "Birth Certificate",
   identificationNumber: "",
@@ -35,24 +37,21 @@ export const IdentificationTypes = [
 export const Role = [
   {
     
-    name: "Dr. Devi Shetty -  Cardiology",
+    name: "Admin",
   },
   {
     
-    name: "Dr. Ranjana Dhanu - Obstetrics and Gynecology",
+    name: "Officer",
   },
   {
    
-    name: "Dr. Sudhansu Bhattacharyya -Neurology",
+    name: "Employee",
   },
   {
     
-    name: "Dr. Ravi Sharma - Pediatrics",
+    name: "technical expert",
   },
-  {
-    
-    name: "Dr. Neha Patil - Dermatology",
-  },
+  
   
 ];
 
