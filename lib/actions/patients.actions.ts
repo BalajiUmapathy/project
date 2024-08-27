@@ -55,7 +55,7 @@ export const getUser = async (userId: string) => {
   }
 };
 
-// REGISTER PATIENT
+// REGISTER 
 export const registerUser = async ({
   identificationDocument,
   ...patient
@@ -74,7 +74,7 @@ export const registerUser = async ({
       file = await storage.createFile(BUCKET_ID!, ID.unique(), inputFile);
     }
 
-    // Create new patient document -> https://appwrite.io/docs/references/cloud/server-nodejs/databases#createDocument
+    // Create new Employee document -> https://appwrite.io/docs/references/cloud/server-nodejs/databases#createDocument
     const newPatient = await databases.createDocument(
       DATABASE_ID!,
       USER_COLLECTION_ID!,
@@ -90,11 +90,11 @@ export const registerUser = async ({
 
     return parseStringify(newPatient);
   } catch (error) {
-    console.error("An error occurred while creating a new patient:", error);
+    console.error("An error occurred while creating a new  employee:", error);
   }
 };
 
-// GET PATIENT
+// GET Employee
 export const getPatient = async (userId: string) => {
   try {
     const patients = await databases.listDocuments(
@@ -106,7 +106,7 @@ export const getPatient = async (userId: string) => {
     return parseStringify(patients.documents[0]);
   } catch (error) {
     console.error(
-      "An error occurred while retrieving the patient details:",
+      "An error occurred while retrieving the employee details:",
       error
     );
   }
@@ -121,7 +121,7 @@ import { account } from '../appwrite.config';
 
 export const loginUser = async (email: string, password: string) => {
   try {
-    const session = await account.createSession(email, password);
+    const session = await account.createEmailPasswordSession(email, password);
     return session;
   } catch (error) {
     console.error("An error occurred while logging in:", error);

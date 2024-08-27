@@ -42,8 +42,19 @@ const RegisterForm = ({ user }: { user: User }) => {
     },
   });
 
+  const sanitizeUserId = (userId: string): string => {
+    // Ensure the userId only contains allowed characters and is not longer than 36 characters
+    return userId
+      .replace(/[^a-zA-Z0-9._-]/g, '')  // Remove invalid characters
+      .substring(0, 36);                 // Truncate to 36 characters
+  };
+
   const onSubmit = async (values: z.infer<typeof PatientFormValidation>) => {
     setIsLoading(true);
+
+
+    console.log("Original User ID:", user.$id);
+
 
     // Store file info in form data as
     let formData;
@@ -81,6 +92,7 @@ const RegisterForm = ({ user }: { user: User }) => {
           : undefined,
        
       };
+
 
       const newUser = await registerUser(User);
 
