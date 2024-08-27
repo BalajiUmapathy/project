@@ -14,7 +14,7 @@ const Resgister = async  ({params:{userId}}: SearchParamProps) => {
     <div 
       className="flex h-screen bg-cover bg-center relative"
       style={{ 
-        backgroundImage: "url('/1111.png')",
+        backgroundImage: "url('/one.jpg')",
         backgroundSize: 'cover', 
         backgroundPosition: 'center'
       }}

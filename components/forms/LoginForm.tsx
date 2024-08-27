@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+
 import { Form } from "@/components/ui/form";
 import CustomFormField, { FormFieldType } from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
@@ -43,6 +44,17 @@ const LoginForm = () => {
 
     setIsLoading(false);
   };
+
+
+ // Function to handle button click
+ const handleButtonClick = () => {
+  if (!isLoading) {
+    setIsLoading(true); // Set loading state
+    setTimeout(() => {
+      router.push('/registered'); // Navigate to /registered
+    }, 500); // Simulate loading delay
+  }
+};
 
   return (
     <Form {...form}>
