@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
+import { newUser } from "./RegisteredForm";
 
 import { Form } from "@/components/ui/form";
 import CustomFormField, { FormFieldType } from "../CustomFormField";
@@ -34,8 +34,8 @@ const LoginForm = () => {
       const { email, password } = values;
       const session = await loginUser(email, password);
 
-      if (session) {
-        router.push("/dashboard"); // Redirect to a protected page or dashboard
+      if (session && newUser) { // Use newUser here
+        router.push(`/users/${newUser.$id}/dashboard`); // Redirect using newUser.$id
       }
     } catch (error) {
       setError("Invalid email or password.");

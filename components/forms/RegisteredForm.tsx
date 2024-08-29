@@ -14,6 +14,9 @@ import "react-phone-number-input/style.css";
 import CustomFormField, { FormFieldType } from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
 
+
+
+export let newUser: any = null;
  
 
  
@@ -40,7 +43,7 @@ const RegisteredForm =() =>  {
         password: values.password,
       };
 
-      const newUser = await createUser(user);
+        newUser = await createUser(user);
 
       if (newUser) {
         router.push(`/users/${newUser.$id}/register`);
