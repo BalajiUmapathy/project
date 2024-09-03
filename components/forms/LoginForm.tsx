@@ -10,7 +10,7 @@ import { newUser } from "./RegisteredForm";
 import { Form } from "@/components/ui/form";
 import CustomFormField, { FormFieldType } from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
-import { loginUser } from "@/lib/actions/patients.actions";
+import { getUser, loginUser } from "@/lib/actions/patients.actions";
 import { LoginFormValidation } from "@/lib/validation"; // Ensure you have this schema defined
 
 const LoginForm = () => {
@@ -34,10 +34,15 @@ const LoginForm = () => {
       const { email, password } = values;
       const session = await loginUser(email, password);
 
-      if (session && newUser) { // Use newUser here
-        router.push(`/users/${newUser.$id}/dashboard`); // Redirect using newUser.$id
+      if (session) {
+        const userId = session.userId; // You may have to fetch this based on how Appwrite returns the session data
+        const user = await getUser(userId); // Fetch the user details
+
+        if (user) {
+          router.push(`/users/${user.$id}/dashboard`); // Redirect using the user ID
+        }
       }
-    } catch (error) {
+} catch (error) {
       setError("Invalid email or password.");
       console.error(error);
     }
